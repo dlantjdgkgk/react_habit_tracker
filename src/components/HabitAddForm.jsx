@@ -7,7 +7,7 @@ const HabitAddForm = memo(({ handleAdd }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const name = inputRef.current.value;
-    name && handleAdd();
+    name && handleAdd(name);
     formRef.current.reset();
   };
 

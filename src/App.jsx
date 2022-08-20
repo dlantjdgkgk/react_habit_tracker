@@ -9,8 +9,8 @@ function App() {
     { id: 3, name: "Coding", count: 0 },
   ]);
 
-  const handlePlus = (habit) => {
-    setHabits(
+  const handlePlus = useCallback((habit) => {
+    setHabits((habits) =>
       habits.map((item) => {
         if (item.id === habit.id) {
           return { ...habit, count: habit.count + 1 };
@@ -18,12 +18,38 @@ function App() {
         return item;
       }),
     );
-  };
+  }, []);
 
-  const handleMinus = () => {};
-  const handleDelete = () => {};
-  const handleAdd = () => {};
-  const handleReset = () => {};
+  const handleMinus = useCallback((habit) => {
+    setHabits((habits) =>
+      habits.map((item) => {
+        if (item.id === habit.id) {
+          const count = habit.count - 1;
+          return { ...habit, count: count < 0 ? 0 : count };
+        }
+        return item;
+      }),
+    );
+  }, []);
+
+  const handleDelete = useCallback((habit) => {
+    setHabits((habits) => habits.filter((item) => item.id !== habit.id));
+  }, []);
+
+  const handleAdd = useCallback((name) => {
+    setHabits((habits) => [...habits, { id: Date.now(), name, count: 0 }]);
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setHabits((habits) =>
+      habits.map((habit) => {
+        if (habit.count !== 0) {
+          return { ...habit, count: 0 };
+        }
+        return habit;
+      }),
+    );
+  }, []);
 
   return (
     <div className="App">
