@@ -27,7 +27,6 @@ function App() {
           const count = habit.count - 1;
           return { ...habit, count: count < 0 ? 0 : count };
         }
-        return item;
       }),
     );
   }, []);
